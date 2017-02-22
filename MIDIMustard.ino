@@ -29,19 +29,20 @@ public:
   
     if( new_value != m_current_value )
     {
-      m_current_value = new_value;
+      static const float scale        = 127.0f / 1024.0f;
+      const int current_value_scaled  = m_current_value * scale;
+      const int new_value_scaled      = new_value * scale;
+      if( current_value_scaled != new_value_scaled )
+      {
+        usbMIDI.sendControlChange( m_midi_cc, new_value_scaled, MIDI_CHANNEL );
+      }
 
-      usbMIDI.sendControlChange( m_midi_cc, m_current_value, MIDI_CHANNEL );
+      m_current_value = new_value;
       
       return true;
     }
   
     return false;
-  }
-  
-  float value() const
-  {
-    return m_current_value / 1024.0f;
   }
 };
 
