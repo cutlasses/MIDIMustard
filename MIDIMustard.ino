@@ -25,7 +25,13 @@ public:
 
   bool update()
   {
-    int new_value = analogRead( m_data_pin );
+    const int NUM_SAMPLES( 3 );
+    int new_value( 0 );
+    for( int i = 0; i < NUM_SAMPLES; ++ i )
+    {
+      new_value += analogRead( m_data_pin );  
+    }
+    new_value /= NUM_SAMPLES;
   
     if( new_value != m_current_value )
     {
