@@ -70,4 +70,6 @@ void loop()
   {
     g_dials[i].update();
   }
+
+  delay(5); // 5ms
 }
